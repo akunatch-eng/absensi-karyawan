@@ -1,0 +1,20 @@
+<?php
+require "db.php";
+
+$id = $_GET['id'] ?? 0;
+
+$q = $conn->prepare("
+    SELECT 
+        k.*,
+        u.email
+    FROM karyawan k
+    LEFT JOIN users u ON k.id_user = u.id_user
+    WHERE k.id_karyawan = ?
+");
+$q->bind_param("i", $id);
+$q->execute();
+
+$result = $q->get_result();
+$data = $result->fetch_assoc();
+
+echo json_encode($data);
