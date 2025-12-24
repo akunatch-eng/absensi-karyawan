@@ -14,13 +14,12 @@ if ($nama === '' || $nip === '') {
 }
 
 // =====================
-// FIELD OPSIONAL
+// FIELD OPSIONAL (KOSONG → NULL)
 // =====================
-$email         = $_POST['email'] ?? null;
-$jenis_kelamin = $_POST['jenis_kelamin'] ?? null;
-$tgl_lahir     = $_POST['tgl_lahir'] ?? null;
-$alamat        = $_POST['alamat'] ?? null;
-$no_hp         = $_POST['no_hp'] ?? null;
+$jenis_kelamin = !empty($_POST['jenis_kelamin']) ? $_POST['jenis_kelamin'] : null;
+$tgl_lahir     = !empty($_POST['tgl_lahir']) ? $_POST['tgl_lahir'] : null;
+$alamat        = !empty($_POST['alamat']) ? $_POST['alamat'] : null;
+$no_hp         = !empty($_POST['no_hp']) ? $_POST['no_hp'] : null;
 
 // =====================
 // MODE EDIT
@@ -54,7 +53,7 @@ if ($id_karyawan) {
 }
 
 // =====================
-// MODE TAMBAH
+// MODE TAMBAH (AUTO_INCREMENT JALAN)
 // =====================
 $sql = "INSERT INTO karyawan
 (nama_karyawan, nip, jenis_kelamin, tgl_lahir, alamat, no_hp)
@@ -73,3 +72,4 @@ $stmt->bind_param(
 
 $stmt->execute();
 header("Location: ../dashboard/admin.php?page=karyawan&msg=created");
+exit;
