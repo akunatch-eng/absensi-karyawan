@@ -233,6 +233,98 @@ body { font-family:'Poppins',sans-serif; background:#f4f7f5; color:#41524a; line
     background: #000000ff;
 }
 .footer-links a:hover { text-decoration:underline; }
+
+/* ===== Card Container ===== */
+.izin-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+}
+
+/* ===== Title ===== */
+.izin-title {
+    margin-bottom: 18px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* ===== Table ===== */
+.izin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Header */
+.izin-table thead th {
+    background: #f4f6f8;
+    padding: 12px 10px;
+    text-align: left;
+    color: #34495e;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Body */
+.izin-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ececec;
+    color: #2f3640;
+    vertical-align: middle;
+}
+
+/* Hover */
+.izin-table tbody tr:hover {
+    background-color: #f9fbfc;
+}
+
+/* Empty State */
+.izin-empty {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* ===== Badge ===== */
+.izin-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+/* Status Colors */
+.izin-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.izin-badge.disetujui {
+    background: #d4edda;
+    color: #155724;
+}
+
+.izin-badge.ditolak {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ===== Link ===== */
+.izin-link {
+    color: #3498db;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.izin-link:hover {
+    text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -453,9 +545,10 @@ body { font-family:'Poppins',sans-serif; background:#f4f7f5; color:#41524a; line
 </div>
 
 <!-- Riwayat Izin -->
-<div class="card table-card">
-    <h3>Riwayat Izin</h3>
-    <table class="table">
+<div class="izin-card">
+    <h3 class="izin-title">Riwayat Izin</h3>
+
+    <table class="izin-table">
         <thead>
             <tr>
                 <th>Tanggal</th>
@@ -466,22 +559,30 @@ body { font-family:'Poppins',sans-serif; background:#f4f7f5; color:#41524a; line
             </tr>
         </thead>
         <tbody>
-            <?php if(mysqli_num_rows($riwayat)===0): ?>
-                <tr><td colspan="5" style="text-align:center;color:#6e7b73;">Belum ada riwayat izin</td></tr>
+            <?php if (mysqli_num_rows($riwayat) === 0): ?>
+                <tr>
+                    <td colspan="5" class="izin-empty">
+                        Belum ada riwayat izin
+                    </td>
+                </tr>
             <?php else: ?>
-                <?php while($row=mysqli_fetch_assoc($riwayat)): ?>
+                <?php while ($row = mysqli_fetch_assoc($riwayat)): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['tanggal']) ?></td>
                         <td><?= htmlspecialchars($row['jenis']) ?></td>
                         <td><?= htmlspecialchars($row['keterangan']) ?></td>
                         <td>
-                            <span class="badge <?= strtolower($row['status']) ?>">
-                                <?= $row['status'] ?>
+                            <span class="izin-badge <?= strtolower($row['status']) ?>">
+                                <?= htmlspecialchars($row['status']) ?>
                             </span>
                         </td>
                         <td>
-                            <?php if($row['bukti']): ?>
-                                <a href="../uploads/bukti/<?= htmlspecialchars($row['bukti']) ?>" target="_blank">Lihat</a>
+                            <?php if ($row['bukti']): ?>
+                                <a class="izin-link"
+                                   href="../uploads/bukti/<?= htmlspecialchars($row['bukti']) ?>"
+                                   target="_blank">
+                                   Lihat
+                                </a>
                             <?php else: ?>
                                 -
                             <?php endif; ?>
@@ -493,6 +594,7 @@ body { font-family:'Poppins',sans-serif; background:#f4f7f5; color:#41524a; line
     </table>
 </div>
 <?php endif; ?>
+
 
 <script>
 // Tombol edit → tampilkan form

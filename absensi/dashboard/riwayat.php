@@ -153,7 +153,7 @@ tr.holiday {
     border: none;
     border-radius: 6px;
     background: #1aa34a;
-    color: #fff;
+    color: #ffffffff;
     cursor: pointer;
     transition: 0.3s;
 }
